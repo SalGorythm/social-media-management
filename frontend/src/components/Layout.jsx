@@ -11,6 +11,8 @@ const nav = [
   { to: "/calendar", label: "Calendar" },
   { to: "/accounts", label: "Accounts" },
   { to: "/personas", label: "Personas" },
+  { to: "/settings/ai", label: "AI settings" },
+  { to: "/guide", label: "Guide" },
 ];
 
 export function Layout() {

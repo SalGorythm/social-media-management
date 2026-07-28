@@ -118,6 +118,15 @@ Generic demo JSON: [`examples/sample-content-queue.json`](examples/sample-conten
 | `examples/` | Sample queue JSON (safe to commit) |
 | `backend/` | Legacy Node Express API (unused) |
 
+## AI generation
+
+Two paths (same JSON → `content-queue` → import):
+
+1. **Cursor / Claude / Copilot (IDE)** — Accounts → **Cursor prompt** → copy into your editor → save JSON under `content-queue/` → Scan.
+2. **In-app LLM** — [AI settings](http://127.0.0.1:5173/settings/ai): add **Gemini**, **OpenAI**, or **xAI Grok** keys (stored per user, encrypted). Then Accounts → **Generate with AI**.
+
+See the in-app **Guide** page for the full walkthrough.
+
 ## Auth and multi-tenant data
 
 - **Sign up / Sign in** — JWT Bearer token in the browser.  

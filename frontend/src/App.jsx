@@ -11,6 +11,8 @@ import { CalendarPage } from "./pages/CalendarPage.jsx";
 import { PersonasPage } from "./pages/PersonasPage.jsx";
 import { LoginPage } from "./pages/LoginPage.jsx";
 import { SignupPage } from "./pages/SignupPage.jsx";
+import { AiSettingsPage } from "./pages/AiSettingsPage.jsx";
+import { GuidePage } from "./pages/GuidePage.jsx";
 
 export default function App() {
   return (
@@ -27,6 +29,8 @@ export default function App() {
             <Route path="/accounts" element={<AccountsPage />} />
             <Route path="/calendar" element={<CalendarPage />} />
             <Route path="/personas" element={<PersonasPage />} />
+            <Route path="/settings/ai" element={<AiSettingsPage />} />
+            <Route path="/guide" element={<GuidePage />} />
           </Route>
         </Route>
       </Route>

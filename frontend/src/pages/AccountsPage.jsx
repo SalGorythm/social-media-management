@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { api } from "../api.js";
 import { usePersona } from "../context/PersonaContext.jsx";
@@ -21,6 +22,15 @@ export function AccountsPage() {
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [promptAccount, setPromptAccount] = useState(null);
+  const [aiAccount, setAiAccount] = useState(null);
+  const [llmMeta, setLlmMeta] = useState(null);
+  const [aiForm, setAiForm] = useState({
+    provider: "gemini",
+    model: "",
+    post_count: 5,
+    extra_instructions: "",
+  });
+  const [generating, setGenerating] = useState(false);
 
   async function load() {
     setLoading(true);
@@ -153,6 +163,56 @@ Save it in the /content-queue folder at the root of this project.`;
     }
   }
 
+  async function openAiGenerate(acc) {
+    setAiAccount(acc);
+    try {
+      const res = await api("/api/llm/providers");
+      setLlmMeta(res);
+      const configured = (res.providers || []).filter((p) => p.configured);
+      const pick =
+        configured.find((p) => p.id === res.default_provider) || configured[0] || res.providers?.[0];
+      setAiForm({
+        provider: pick?.id || "gemini",
+        model: pick?.model || pick?.default_model || "",
+        post_count: 5,
+        extra_instructions: "",
+      });
+    } catch (e) {
+      toast.error(e.message || "Could not load AI providers");
+    }
+  }
+
+  async function runAiGenerate() {
+    if (!aiAccount) return;
+    const provider = (llmMeta?.providers || []).find((p) => p.id === aiForm.provider);
+    if (!provider?.configured) {
+      toast.error("Configure this provider under AI settings first");
+      return;
+    }
+    setGenerating(true);
+    try {
+      const out = await api("/api/llm/generate", {
+        method: "POST",
+        json: {
+          account_id: aiAccount.id,
+          provider: aiForm.provider,
+          model: aiForm.model || null,
+          post_count: Number(aiForm.post_count) || 5,
+          extra_instructions: aiForm.extra_instructions || "",
+        },
+      });
+      toast.success(`Imported ${out.post_count || 0} post(s) from ${out.file}`);
+      setAiAccount(null);
+      await load();
+    } catch (e) {
+      toast.error(e.message || "Generation failed");
+    } finally {
+      setGenerating(false);
+    }
+  }
+
+  const selectedProvider = (llmMeta?.providers || []).find((p) => p.id === aiForm.provider);
+
   if (loading) return <p className="text-slate-500">Loading…</p>;
 
   return (
@@ -163,7 +223,7 @@ Save it in the /content-queue folder at the root of this project.`;
             Accounts
           </h1>
           <p className="text-slate-600 dark:text-slate-400 mt-1 text-sm">
-            Manage handles, tones, and generate Cursor prompts per account.
+            Manage handles and tones. Generate via Cursor prompt or in-app AI (Gemini / OpenAI / Grok).
           </p>
         </div>
         <button
@@ -203,10 +263,17 @@ Save it in the /content-queue folder at the root of this project.`;
               <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
+                  onClick={() => openAiGenerate(acc)}
+                  className="rounded-lg bg-indigo-600 px-3 py-2 text-sm font-semibold text-white"
+                >
+                  Generate with AI
+                </button>
+                <button
+                  type="button"
                   onClick={() => setPromptAccount(acc)}
                   className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm font-medium"
                 >
-                  Generate prompt
+                  Cursor prompt
                 </button>
                 <button
                   type="button"
@@ -308,7 +375,9 @@ Save it in the /content-queue folder at the root of this project.`;
             <h2 className="font-display font-semibold text-lg text-slate-900 dark:text-white">
               Cursor prompt — {promptAccount.name}
             </h2>
-            <p className="text-sm text-slate-500 mt-1">Copy into Cursor to generate a batch JSON file.</p>
+            <p className="text-sm text-slate-500 mt-1">
+              Copy into Cursor, Claude, or Copilot in your IDE. Save the JSON under content-queue/.
+            </p>
             <pre className="mt-4 text-xs whitespace-pre-wrap bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 max-h-[50vh] overflow-auto">
               {promptText}
             </pre>
@@ -326,6 +395,101 @@ Save it in the /content-queue folder at the root of this project.`;
                 className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white"
               >
                 Copy prompt
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {aiAccount ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="max-w-lg w-full rounded-2xl bg-white dark:bg-slate-900 p-6 shadow-xl border border-slate-200 dark:border-slate-800 space-y-4">
+            <h2 className="font-display font-semibold text-lg text-slate-900 dark:text-white">
+              Generate with AI — {aiAccount.name}
+            </h2>
+            <p className="text-sm text-slate-500">
+              Uses your saved API key. Output is written to content-queue and imported automatically.{" "}
+              <Link to="/settings/ai" className="text-indigo-600 dark:text-indigo-400 underline">
+                AI settings
+              </Link>
+            </p>
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-slate-500">Provider</label>
+              <select
+                value={aiForm.provider}
+                onChange={(e) => {
+                  const id = e.target.value;
+                  const p = (llmMeta?.providers || []).find((x) => x.id === id);
+                  setAiForm((f) => ({
+                    ...f,
+                    provider: id,
+                    model: p?.model || p?.default_model || "",
+                  }));
+                }}
+                className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
+              >
+                {(llmMeta?.providers || []).map((p) => (
+                  <option key={p.id} value={p.id} disabled={!p.configured}>
+                    {p.label}
+                    {p.configured ? "" : " (not configured)"}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-slate-500">Model</label>
+              <select
+                value={aiForm.model}
+                onChange={(e) => setAiForm((f) => ({ ...f, model: e.target.value }))}
+                className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
+              >
+                {(selectedProvider?.models || [aiForm.model]).map((m) => (
+                  <option key={m} value={m}>
+                    {m}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-slate-500">Number of posts</label>
+              <input
+                type="number"
+                min={1}
+                max={20}
+                value={aiForm.post_count}
+                onChange={(e) => setAiForm((f) => ({ ...f, post_count: e.target.value }))}
+                className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-slate-500">Extra instructions (optional)</label>
+              <textarea
+                rows={3}
+                value={aiForm.extra_instructions}
+                onChange={(e) => setAiForm((f) => ({ ...f, extra_instructions: e.target.value }))}
+                className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
+                placeholder="e.g. Focus on launch week; include one reel"
+              />
+            </div>
+            <div className="flex gap-2 justify-end">
+              <button
+                type="button"
+                onClick={() => setAiAccount(null)}
+                className="rounded-lg border border-slate-200 dark:border-slate-700 px-4 py-2 text-sm"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={generating}
+                onClick={runAiGenerate}
+                className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+              >
+                {generating ? "Generating…" : "Generate & import"}
               </button>
             </div>
           </div>
