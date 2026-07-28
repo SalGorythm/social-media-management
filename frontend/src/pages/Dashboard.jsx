@@ -4,6 +4,7 @@ import { api } from "../api.js";
 import { usePersona } from "../context/PersonaContext.jsx";
 import { StatCard } from "../components/StatCard.jsx";
 import { EmptyState } from "../components/EmptyState.jsx";
+import { Button, PageHeader } from "../components/ui.jsx";
 import { platformLabel } from "../lib/platforms.js";
 
 export function Dashboard() {
@@ -57,37 +58,24 @@ export function Dashboard() {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-        <div>
-          <h1 className="font-display text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white">
-            Dashboard
-          </h1>
-          <p className="text-slate-600 dark:text-slate-400 mt-1 text-sm">
-            Overview of your content pipeline and recent status changes.
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={scanQueue}
-          disabled={parsing}
-          className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 disabled:opacity-60"
-        >
-          {parsing ? "Scanning…" : "Scan queue folder"}
-        </button>
-      </div>
+      <PageHeader
+        title="Dashboard"
+        description="Overview of your content pipeline and recent status changes."
+        actions={
+          <Button onClick={scanQueue} disabled={parsing}>
+            {parsing ? "Scanning…" : "Scan queue folder"}
+          </Button>
+        }
+      />
 
       {!stats || stats.total_pipeline === 0 ? (
         <EmptyState
           title="No posts yet"
           description="Drop a JSON file into content-queue (or use the demo file), then click Scan queue folder or wait for the file watcher."
           action={
-            <button
-              type="button"
-              onClick={scanQueue}
-              className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white"
-            >
-              Scan queue folder
-            </button>
+            <Button onClick={scanQueue} disabled={parsing}>
+              {parsing ? "Scanning…" : "Scan queue folder"}
+            </Button>
           }
         />
       ) : (

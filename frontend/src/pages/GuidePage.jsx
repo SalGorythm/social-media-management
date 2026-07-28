@@ -1,17 +1,13 @@
 import { Link } from "react-router-dom";
+import { PageHeader } from "../components/ui.jsx";
 
 export function GuidePage() {
   return (
     <div className="space-y-10 max-w-3xl">
-      <div>
-        <h1 className="font-display text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white">
-          User guide
-        </h1>
-        <p className="text-slate-600 dark:text-slate-400 mt-1 text-sm">
-          How Social Content Studio fits together: personas, queue import, Cursor, and in-app LLM
-          generation.
-        </p>
-      </div>
+      <PageHeader
+        title="User guide"
+        description="How Social Content Studio fits together: personas, queue import, Cursor, and in-app LLM generation."
+      />
 
       <Section title="1. Sign up and personas">
         <p>

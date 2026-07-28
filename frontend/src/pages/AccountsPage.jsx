@@ -4,6 +4,16 @@ import { toast } from "sonner";
 import { api } from "../api.js";
 import { usePersona } from "../context/PersonaContext.jsx";
 import { EmptyState } from "../components/EmptyState.jsx";
+import {
+  ActionRow,
+  Button,
+  Field,
+  Input,
+  Modal,
+  PageHeader,
+  Select,
+  Textarea,
+} from "../components/ui.jsx";
 
 const emptyForm = {
   name: "",
@@ -217,23 +227,11 @@ Save it in the /content-queue folder at the root of this project.`;
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-        <div>
-          <h1 className="font-display text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white">
-            Accounts
-          </h1>
-          <p className="text-slate-600 dark:text-slate-400 mt-1 text-sm">
-            Manage handles and tones. Generate via Cursor prompt or in-app AI (Gemini / OpenAI / Grok).
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={startCreate}
-          className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white"
-        >
-          Add account
-        </button>
-      </div>
+      <PageHeader
+        title="Accounts"
+        description="Manage handles and tones. Generate via Cursor prompt or in-app AI (Gemini / OpenAI / Grok)."
+        actions={<Button onClick={startCreate}>Add account</Button>}
+      />
 
       {accounts.length === 0 ? (
         <EmptyState
@@ -260,36 +258,20 @@ Save it in the /content-queue folder at the root of this project.`;
                   <span>Posted {acc.posted}</span>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  onClick={() => openAiGenerate(acc)}
-                  className="rounded-lg bg-indigo-600 px-3 py-2 text-sm font-semibold text-white"
-                >
+              <ActionRow>
+                <Button size="sm" onClick={() => openAiGenerate(acc)}>
                   Generate with AI
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setPromptAccount(acc)}
-                  className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm font-medium"
-                >
+                </Button>
+                <Button size="sm" variant="secondary" onClick={() => setPromptAccount(acc)}>
                   Cursor prompt
-                </button>
-                <button
-                  type="button"
-                  onClick={() => startEdit(acc)}
-                  className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm"
-                >
+                </Button>
+                <Button size="sm" variant="secondary" onClick={() => startEdit(acc)}>
                   Edit
-                </button>
-                <button
-                  type="button"
-                  onClick={() => removeAccount(acc.id)}
-                  className="rounded-lg bg-rose-600 px-3 py-2 text-sm font-medium text-white"
-                >
+                </Button>
+                <Button size="sm" variant="danger" onClick={() => removeAccount(acc.id)}>
                   Delete
-                </button>
-              </div>
+                </Button>
+              </ActionRow>
             </li>
           ))}
         </ul>
@@ -301,213 +283,153 @@ Save it in the /content-queue folder at the root of this project.`;
             {editingId === "new" ? "New account" : "Edit account"}
           </h2>
           <div className="grid sm:grid-cols-2 gap-4">
-            <Field label="Name (handle)" value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
-            <Field label="Product" value={form.product} onChange={(v) => setForm({ ...form, product: v })} />
-            <div className="space-y-1">
-              <label className="text-xs font-medium text-slate-500">Type</label>
-              <select
-                value={form.type}
-                onChange={(e) => setForm({ ...form, type: e.target.value })}
-                className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
-              >
+            <Field label="Name (handle)">
+              <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+            </Field>
+            <Field label="Product">
+              <Input
+                value={form.product}
+                onChange={(e) => setForm({ ...form, product: e.target.value })}
+              />
+            </Field>
+            <Field label="Type">
+              <Select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}>
                 <option value="product">product</option>
                 <option value="brand">brand</option>
                 <option value="personal">personal</option>
-              </select>
-            </div>
-            <div className="space-y-1">
-              <label className="text-xs font-medium text-slate-500">Frequency</label>
-              <select
+              </Select>
+            </Field>
+            <Field label="Frequency">
+              <Select
                 value={form.frequency}
                 onChange={(e) => setForm({ ...form, frequency: e.target.value })}
-                className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
               >
                 <option value="daily">daily</option>
                 <option value="twice_a_week">twice_a_week</option>
                 <option value="weekly">weekly</option>
-              </select>
-            </div>
+              </Select>
+            </Field>
           </div>
-          <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-500">Platforms (comma-separated)</label>
-            <input
+          <Field label="Platforms (comma-separated)">
+            <Input
               value={form.platformsText}
               onChange={(e) => setForm({ ...form, platformsText: e.target.value })}
-              className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
             />
-          </div>
-          <Field label="Tone" value={form.tone} onChange={(v) => setForm({ ...form, tone: v })} />
-          <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-500">Notes / audience</label>
-            <textarea
+          </Field>
+          <Field label="Tone">
+            <Input value={form.tone} onChange={(e) => setForm({ ...form, tone: e.target.value })} />
+          </Field>
+          <Field label="Notes / audience">
+            <Textarea
               rows={3}
               value={form.notes}
               onChange={(e) => setForm({ ...form, notes: e.target.value })}
-              className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
             />
-          </div>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={saveAccount}
-              className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white"
-            >
-              Save
-            </button>
-            <button
-              type="button"
-              onClick={() => setEditingId(null)}
-              className="rounded-lg border border-slate-200 dark:border-slate-700 px-4 py-2 text-sm"
-            >
+          </Field>
+          <ActionRow>
+            <Button onClick={saveAccount}>Save</Button>
+            <Button variant="secondary" onClick={() => setEditingId(null)}>
               Cancel
-            </button>
-          </div>
+            </Button>
+          </ActionRow>
         </div>
       ) : null}
 
       {promptAccount ? (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className="max-w-2xl w-full max-h-[85vh] overflow-auto rounded-2xl bg-white dark:bg-slate-900 p-6 shadow-xl border border-slate-200 dark:border-slate-800">
-            <h2 className="font-display font-semibold text-lg text-slate-900 dark:text-white">
-              Cursor prompt — {promptAccount.name}
-            </h2>
-            <p className="text-sm text-slate-500 mt-1">
-              Copy into Cursor, Claude, or Copilot in your IDE. Save the JSON under content-queue/.
-            </p>
-            <pre className="mt-4 text-xs whitespace-pre-wrap bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 max-h-[50vh] overflow-auto">
-              {promptText}
-            </pre>
-            <div className="mt-4 flex gap-2 justify-end">
-              <button
-                type="button"
-                onClick={() => setPromptAccount(null)}
-                className="rounded-lg border border-slate-200 dark:border-slate-700 px-4 py-2 text-sm"
-              >
+        <Modal
+          title={`Cursor prompt — ${promptAccount.name}`}
+          description="Copy into Cursor, Claude, or Copilot in your IDE. Save the JSON under content-queue/."
+          onClose={() => setPromptAccount(null)}
+          footer={
+            <>
+              <Button variant="secondary" onClick={() => setPromptAccount(null)}>
                 Close
-              </button>
-              <button
-                type="button"
-                onClick={copyPrompt}
-                className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white"
-              >
-                Copy prompt
-              </button>
-            </div>
-          </div>
-        </div>
+              </Button>
+              <Button onClick={copyPrompt}>Copy prompt</Button>
+            </>
+          }
+        >
+          <pre className="text-xs whitespace-pre-wrap bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 max-h-[50vh] overflow-auto">
+            {promptText}
+          </pre>
+        </Modal>
       ) : null}
 
       {aiAccount ? (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className="max-w-lg w-full rounded-2xl bg-white dark:bg-slate-900 p-6 shadow-xl border border-slate-200 dark:border-slate-800 space-y-4">
-            <h2 className="font-display font-semibold text-lg text-slate-900 dark:text-white">
-              Generate with AI — {aiAccount.name}
-            </h2>
-            <p className="text-sm text-slate-500">
+        <Modal
+          title={`Generate with AI — ${aiAccount.name}`}
+          description={
+            <>
               Uses your saved API key. Output is written to content-queue and imported automatically.{" "}
               <Link to="/settings/ai" className="text-indigo-600 dark:text-indigo-400 underline">
                 AI settings
               </Link>
-            </p>
-            <div className="space-y-1">
-              <label className="text-xs font-medium text-slate-500">Provider</label>
-              <select
-                value={aiForm.provider}
-                onChange={(e) => {
-                  const id = e.target.value;
-                  const p = (llmMeta?.providers || []).find((x) => x.id === id);
-                  setAiForm((f) => ({
-                    ...f,
-                    provider: id,
-                    model: p?.model || p?.default_model || "",
-                  }));
-                }}
-                className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
-              >
-                {(llmMeta?.providers || []).map((p) => (
-                  <option key={p.id} value={p.id} disabled={!p.configured}>
-                    {p.label}
-                    {p.configured ? "" : " (not configured)"}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="space-y-1">
-              <label className="text-xs font-medium text-slate-500">Model</label>
-              <select
-                value={aiForm.model}
-                onChange={(e) => setAiForm((f) => ({ ...f, model: e.target.value }))}
-                className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
-              >
-                {(selectedProvider?.models || [aiForm.model]).map((m) => (
-                  <option key={m} value={m}>
-                    {m}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="space-y-1">
-              <label className="text-xs font-medium text-slate-500">Number of posts</label>
-              <input
-                type="number"
-                min={1}
-                max={20}
-                value={aiForm.post_count}
-                onChange={(e) => setAiForm((f) => ({ ...f, post_count: e.target.value }))}
-                className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
-              />
-            </div>
-            <div className="space-y-1">
-              <label className="text-xs font-medium text-slate-500">Extra instructions (optional)</label>
-              <textarea
-                rows={3}
-                value={aiForm.extra_instructions}
-                onChange={(e) => setAiForm((f) => ({ ...f, extra_instructions: e.target.value }))}
-                className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
-                placeholder="e.g. Focus on launch week; include one reel"
-              />
-            </div>
-            <div className="flex gap-2 justify-end">
-              <button
-                type="button"
-                onClick={() => setAiAccount(null)}
-                className="rounded-lg border border-slate-200 dark:border-slate-700 px-4 py-2 text-sm"
-              >
+            </>
+          }
+          onClose={() => setAiAccount(null)}
+          footer={
+            <>
+              <Button variant="secondary" onClick={() => setAiAccount(null)}>
                 Cancel
-              </button>
-              <button
-                type="button"
-                disabled={generating}
-                onClick={runAiGenerate}
-                className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
-              >
+              </Button>
+              <Button disabled={generating} onClick={runAiGenerate}>
                 {generating ? "Generating…" : "Generate & import"}
-              </button>
-            </div>
-          </div>
-        </div>
+              </Button>
+            </>
+          }
+        >
+          <Field label="Provider">
+            <Select
+              value={aiForm.provider}
+              onChange={(e) => {
+                const id = e.target.value;
+                const p = (llmMeta?.providers || []).find((x) => x.id === id);
+                setAiForm((f) => ({
+                  ...f,
+                  provider: id,
+                  model: p?.model || p?.default_model || "",
+                }));
+              }}
+            >
+              {(llmMeta?.providers || []).map((p) => (
+                <option key={p.id} value={p.id} disabled={!p.configured}>
+                  {p.label}
+                  {p.configured ? "" : " (not configured)"}
+                </option>
+              ))}
+            </Select>
+          </Field>
+          <Field label="Model">
+            <Select
+              value={aiForm.model}
+              onChange={(e) => setAiForm((f) => ({ ...f, model: e.target.value }))}
+            >
+              {(selectedProvider?.models || [aiForm.model]).map((m) => (
+                <option key={m} value={m}>
+                  {m}
+                </option>
+              ))}
+            </Select>
+          </Field>
+          <Field label="Number of posts">
+            <Input
+              type="number"
+              min={1}
+              max={20}
+              value={aiForm.post_count}
+              onChange={(e) => setAiForm((f) => ({ ...f, post_count: e.target.value }))}
+            />
+          </Field>
+          <Field label="Extra instructions (optional)">
+            <Textarea
+              rows={3}
+              value={aiForm.extra_instructions}
+              onChange={(e) => setAiForm((f) => ({ ...f, extra_instructions: e.target.value }))}
+              placeholder="e.g. Focus on launch week; include one reel"
+            />
+          </Field>
+        </Modal>
       ) : null}
-    </div>
-  );
-}
-
-function Field({ label, value, onChange }) {
-  return (
-    <div className="space-y-1">
-      <label className="text-xs font-medium text-slate-500">{label}</label>
-      <input
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
-      />
     </div>
   );
 }

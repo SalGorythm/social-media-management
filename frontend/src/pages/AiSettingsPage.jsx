@@ -2,6 +2,15 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { api } from "../api.js";
+import {
+  ActionRow,
+  Button,
+  Field,
+  Input,
+  PageHeader,
+  Panel,
+  Select,
+} from "../components/ui.jsx";
 
 export function AiSettingsPage() {
   const [data, setData] = useState(null);
@@ -77,28 +86,21 @@ export function AiSettingsPage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="font-display text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white">
-          AI settings
-        </h1>
-        <p className="text-slate-600 dark:text-slate-400 mt-1 text-sm max-w-2xl">
-          Store your own LLM API keys (per user, encrypted with the server secret). Keys are never
-          shown in full after save. Cursor / Claude / Copilot in your IDE still work via{" "}
-          <Link to="/accounts" className="text-indigo-600 dark:text-indigo-400 underline">
-            Generate prompt
-          </Link>{" "}
-          — no key needed here.
-        </p>
-      </div>
+      <PageHeader
+        title="AI settings"
+        description={
+          <>
+            Store your own LLM API keys (per user, encrypted with the server secret). Keys are never
+            shown in full after save. Cursor / Claude / Copilot in your IDE still work via{" "}
+            <Link to="/accounts" className="text-indigo-600 dark:text-indigo-400 underline">
+              Generate prompt
+            </Link>{" "}
+            — no key needed here.
+          </>
+        }
+      />
 
-      <section className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm">
-        <h2 className="font-display font-semibold text-slate-900 dark:text-white">
-          IDE assistants (no API key)
-        </h2>
-        <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
-          {data?.cursor_workflow?.description}
-        </p>
-      </section>
+      <Panel title="IDE assistants (no API key)" description={data?.cursor_workflow?.description} />
 
       <ul className="space-y-4">
         {(data?.providers || []).map((p) => (
@@ -132,9 +134,8 @@ export function AiSettingsPage() {
             </div>
 
             <div className="grid sm:grid-cols-2 gap-3">
-              <div className="space-y-1">
-                <label className="text-xs font-medium text-slate-500">API key</label>
-                <input
+              <Field label="API key">
+                <Input
                   type="password"
                   autoComplete="off"
                   placeholder={p.configured ? "Paste new key to replace" : "Paste API key"}
@@ -145,12 +146,10 @@ export function AiSettingsPage() {
                       [p.id]: { ...d[p.id], api_key: e.target.value },
                     }))
                   }
-                  className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
                 />
-              </div>
-              <div className="space-y-1">
-                <label className="text-xs font-medium text-slate-500">Model</label>
-                <select
+              </Field>
+              <Field label="Model">
+                <Select
                   value={drafts[p.id]?.model || p.default_model}
                   onChange={(e) =>
                     setDrafts((d) => ({
@@ -158,45 +157,31 @@ export function AiSettingsPage() {
                       [p.id]: { ...d[p.id], model: e.target.value },
                     }))
                   }
-                  className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
                 >
                   {(p.models || [p.default_model]).map((m) => (
                     <option key={m} value={m}>
                       {m}
                     </option>
                   ))}
-                </select>
-              </div>
+                </Select>
+              </Field>
             </div>
 
-            <div className="flex flex-wrap gap-2">
-              <button
-                type="button"
-                disabled={saving === p.id}
-                onClick={() => saveProvider(p.id)}
-                className="rounded-lg bg-indigo-600 px-3 py-2 text-sm font-semibold text-white disabled:opacity-60"
-              >
+            <ActionRow>
+              <Button size="sm" disabled={saving === p.id} onClick={() => saveProvider(p.id)}>
                 {saving === p.id ? "Saving…" : p.configured ? "Update key" : "Save key"}
-              </button>
+              </Button>
               {p.configured ? (
                 <>
-                  <button
-                    type="button"
-                    onClick={() => setDefault(p.id)}
-                    className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm"
-                  >
+                  <Button size="sm" variant="secondary" onClick={() => setDefault(p.id)}>
                     Set default
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => removeProvider(p.id)}
-                    className="rounded-lg bg-rose-600 px-3 py-2 text-sm font-medium text-white"
-                  >
+                  </Button>
+                  <Button size="sm" variant="danger" onClick={() => removeProvider(p.id)}>
                     Remove
-                  </button>
+                  </Button>
                 </>
               ) : null}
-            </div>
+            </ActionRow>
           </li>
         ))}
       </ul>

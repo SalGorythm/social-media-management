@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { usePersona } from "../context/PersonaContext.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
+import { Button, Select } from "./ui.jsx";
 
 const nav = [
   { to: "/", label: "Dashboard" },
@@ -35,17 +36,17 @@ export function Layout() {
               <label className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">
                 Persona
               </label>
-              <select
+              <Select
                 value={personaId}
                 onChange={(e) => switchPersona(Number(e.target.value))}
-                className="mt-1 w-full text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-2 py-1.5 text-slate-800 dark:text-slate-100"
+                className="mt-1 text-xs py-1.5"
               >
                 {personas.map((p) => (
                   <option key={p.id} value={p.id}>
                     {p.name}
                   </option>
                 ))}
-              </select>
+              </Select>
               {activePersona?.description ? (
                 <p className="text-[10px] text-slate-500 mt-1 line-clamp-2">{activePersona.description}</p>
               ) : null}
@@ -59,7 +60,7 @@ export function Layout() {
                 end={item.to === "/"}
                 className={({ isActive }) =>
                   clsx(
-                    "px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors",
+                    "px-3 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors",
                     isActive
                       ? "bg-indigo-600 text-white"
                       : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
@@ -74,52 +75,46 @@ export function Layout() {
             <label className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">
               Persona
             </label>
-            <select
+            <Select
               value={personaId}
               onChange={(e) => switchPersona(Number(e.target.value))}
-              className="mt-1 w-full text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-2 py-1.5 text-slate-800 dark:text-slate-100"
+              className="mt-1 text-xs py-1.5"
             >
               {personas.map((p) => (
                 <option key={p.id} value={p.id}>
                   {p.name}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2 shrink-0 flex-wrap">
             {user?.email ? (
-              <span className="hidden md:inline text-[10px] text-slate-500 max-w-[120px] truncate" title={user.email}>
+              <span
+                className="hidden md:inline text-[10px] text-slate-500 max-w-[120px] truncate"
+                title={user.email}
+              >
                 {user.email}
               </span>
             ) : null}
-            <button
-              type="button"
-              onClick={logout}
-              className="text-xs px-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200"
-            >
+            <Button size="sm" variant="secondary" onClick={logout}>
               Log out
-            </button>
+            </Button>
             <label className="sr-only" htmlFor="theme-select">
               Theme
             </label>
-            <select
+            <Select
               id="theme-select"
               value={theme}
               onChange={(e) => setTheme(e.target.value)}
-              className="text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1.5 text-slate-700 dark:text-slate-200"
+              className="w-auto text-xs py-1.5"
             >
               <option value="system">System</option>
               <option value="light">Light</option>
               <option value="dark">Dark</option>
-            </select>
-            <button
-              type="button"
-              onClick={toggle}
-              className="text-xs px-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800"
-              title="Toggle light/dark"
-            >
+            </Select>
+            <Button size="sm" variant="secondary" onClick={toggle} title="Toggle light/dark">
               Toggle
-            </button>
+            </Button>
           </div>
         </div>
       </aside>

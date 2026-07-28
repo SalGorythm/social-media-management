@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { setStoredPersonaId } from "../api.js";
 import { useAuth } from "../context/AuthContext.jsx";
+import { Button, Field, Input } from "../components/ui.jsx";
 
 export function SignupPage() {
   const { token, loading, signup } = useAuth();
@@ -37,30 +38,25 @@ export function SignupPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 p-4">
       <div className="w-full max-w-md rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm">
-        <h1 className="font-display text-2xl font-semibold text-slate-900 dark:text-white">Create account</h1>
+        <h1 className="font-display text-2xl font-semibold text-slate-900 dark:text-white">
+          Create account
+        </h1>
         <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
           Your content queue imports into SQLite and is scoped to this account.
         </p>
         <form onSubmit={onSubmit} className="mt-6 space-y-4">
-          <div>
-            <label htmlFor="signup-email" className="block text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Email
-            </label>
-            <input
+          <Field label="Email">
+            <Input
               id="signup-email"
               type="email"
               autoComplete="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100"
             />
-          </div>
-          <div>
-            <label htmlFor="signup-password" className="block text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Password
-            </label>
-            <input
+          </Field>
+          <Field label="Password">
+            <Input
               id="signup-password"
               type="password"
               autoComplete="new-password"
@@ -68,17 +64,12 @@ export function SignupPage() {
               minLength={8}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100"
             />
-            <p className="mt-1 text-xs text-slate-500">At least 8 characters.</p>
-          </div>
-          <button
-            type="submit"
-            disabled={submitting || loading}
-            className="w-full rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-500 disabled:opacity-60"
-          >
+            <p className="text-xs text-slate-500">At least 8 characters.</p>
+          </Field>
+          <Button type="submit" className="w-full" disabled={submitting || loading}>
             {submitting ? "Creating…" : "Sign up"}
-          </button>
+          </Button>
         </form>
         <p className="mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
           Already have an account?{" "}

@@ -1,10 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import clsx from "clsx";
 import { api } from "../api.js";
 import { usePersona } from "../context/PersonaContext.jsx";
 import { EmptyState } from "../components/EmptyState.jsx";
+import {
+  ActionRow,
+  Button,
+  FilterDate,
+  FilterSelect,
+  LinkButton,
+  PageHeader,
+} from "../components/ui.jsx";
 import { platformIcon, platformLabel } from "../lib/platforms.js";
 
 const PLATFORMS = ["", "instagram", "x", "threads", "facebook", "reddit"];
@@ -124,24 +131,13 @@ export function PostedArchive() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-        <div>
-          <h1 className="font-display text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white">
-            Posted archive
-          </h1>
-          <p className="text-slate-600 dark:text-slate-400 mt-1 text-sm">
-            Content you have already published manually. Review, copy, or remove records here.
-          </p>
-        </div>
-        <Link
-          to="/review"
-          className="inline-flex items-center justify-center rounded-xl border border-slate-200 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800"
-        >
-          Back to review queue
-        </Link>
-      </div>
+      <PageHeader
+        title="Posted archive"
+        description="Content you have already published manually. Review, copy, or remove records here."
+        actions={<LinkButton to="/review">Back to review queue</LinkButton>}
+      />
 
-      <div className="flex flex-wrap gap-2 items-end rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4">
+      <div className="flex flex-wrap gap-3 items-end rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4">
         <FilterSelect
           label="Account"
           value={filters.account_id}
@@ -169,35 +165,23 @@ export function PostedArchive() {
             label: p ? p : "All",
           }))}
         />
-        <div className="flex flex-col gap-1">
-          <span className="text-xs font-medium text-slate-500">Scheduled from</span>
-          <input
-            type="date"
-            value={filters.date_from}
-            onChange={(e) => setFilters((f) => ({ ...f, date_from: e.target.value }))}
-            className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-2 py-1.5 text-sm"
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <span className="text-xs font-medium text-slate-500">Scheduled to</span>
-          <input
-            type="date"
-            value={filters.date_to}
-            onChange={(e) => setFilters((f) => ({ ...f, date_to: e.target.value }))}
-            className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-2 py-1.5 text-sm"
-          />
-        </div>
+        <FilterDate
+          label="Scheduled from"
+          value={filters.date_from}
+          onChange={(v) => setFilters((f) => ({ ...f, date_from: v }))}
+        />
+        <FilterDate
+          label="Scheduled to"
+          value={filters.date_to}
+          onChange={(v) => setFilters((f) => ({ ...f, date_to: v }))}
+        />
       </div>
 
-      <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          onClick={deleteSelected}
-          className="rounded-lg bg-rose-600 px-3 py-2 text-sm font-medium text-white hover:bg-rose-500"
-        >
+      <ActionRow>
+        <Button size="sm" variant="danger" onClick={deleteSelected}>
           Delete selected
-        </button>
-      </div>
+        </Button>
+      </ActionRow>
 
       {loading ? (
         <p className="text-slate-500">Loading…</p>
@@ -205,14 +189,7 @@ export function PostedArchive() {
         <EmptyState
           title="No posted content yet"
           description="When you mark items as posted in the review queue, they will appear here for reference and cleanup."
-          action={
-            <Link
-              to="/review"
-              className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white"
-            >
-              Go to review queue
-            </Link>
-          }
+          action={<LinkButton to="/review" variant="primary">Go to review queue</LinkButton>}
         />
       ) : (
         <ul className="space-y-4">
@@ -258,13 +235,14 @@ export function PostedArchive() {
                     >
                       {post.caption}
                     </p>
-                    <button
-                      type="button"
-                      className="text-sm text-indigo-600 dark:text-indigo-400 mt-1"
+                    <Button
+                      variant="link"
+                      size="sm"
+                      className="mt-1"
                       onClick={() => setExpanded((e) => ({ ...e, [post.id]: !e[post.id] }))}
                     >
                       {expanded[post.id] ? "Show less" : "Expand caption"}
-                    </button>
+                    </Button>
                   </div>
 
                   <div className="flex flex-wrap gap-1">
@@ -286,85 +264,59 @@ export function PostedArchive() {
                   ) : null}
 
                   <div>
-                    <button
-                      type="button"
-                      className="text-sm font-medium text-indigo-600 dark:text-indigo-400"
+                    <Button
+                      variant="link"
+                      size="sm"
                       onClick={() => setPromptOpen((p) => ({ ...p, [post.id]: !p[post.id] }))}
                     >
                       {promptOpen[post.id] ? "Hide image prompt" : "Image prompt"}
-                    </button>
+                    </Button>
                     {promptOpen[post.id] && post.image_prompt ? (
-                      <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 whitespace-pre-wrap border border-slate-100 dark:border-slate-800 rounded-lg p-3">
+                      <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 whitespace-pre-wrap border border-slate-100 dark:border-slate-800 rounded-xl p-3">
                         {post.image_prompt}
                       </p>
                     ) : null}
                   </div>
 
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    <Link
-                      to={`/posts/${post.id}`}
-                      className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-sm font-medium"
-                    >
+                  <ActionRow className="pt-1">
+                    <LinkButton to={`/posts/${post.id}`} size="sm">
                       View / edit
-                    </Link>
-                    <button
-                      type="button"
+                    </LinkButton>
+                    <Button
+                      size="sm"
+                      variant="secondary"
                       onClick={() => copyText(post.caption, "Caption copied")}
-                      className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-sm"
                     >
                       Copy caption
-                    </button>
+                    </Button>
                     {(post.hashtags || []).length > 0 ? (
-                      <button
-                        type="button"
+                      <Button
+                        size="sm"
+                        variant="secondary"
                         onClick={() => copyText(formatHashtags(post.hashtags), "Hashtags copied")}
-                        className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-sm"
                       >
                         Copy hashtags
-                      </button>
+                      </Button>
                     ) : null}
                     {post.image_prompt ? (
-                      <button
-                        type="button"
+                      <Button
+                        size="sm"
+                        variant="secondary"
                         onClick={() => copyText(post.image_prompt, "Image prompt copied")}
-                        className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-sm"
                       >
                         Copy image prompt
-                      </button>
+                      </Button>
                     ) : null}
-                    <button
-                      type="button"
-                      onClick={() => deleteOne(post.id)}
-                      className="rounded-lg bg-rose-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-rose-500"
-                    >
+                    <Button size="sm" variant="danger" onClick={() => deleteOne(post.id)}>
                       Delete
-                    </button>
-                  </div>
+                    </Button>
+                  </ActionRow>
                 </div>
               </div>
             </li>
           ))}
         </ul>
       )}
-    </div>
-  );
-}
-
-function FilterSelect({ label, value, onChange, options }) {
-  return (
-    <div className="flex flex-col gap-1 min-w-[8rem]">
-      <span className="text-xs font-medium text-slate-500">{label}</span>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-2 py-1.5 text-sm"
-      >
-        {options.map((o) => (
-          <option key={o.value || "all"} value={o.value}>
-            {o.label}
-          </option>
-        ))}
-      </select>
     </div>
   );
 }

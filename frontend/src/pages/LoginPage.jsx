@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { setStoredPersonaId } from "../api.js";
 import { useAuth } from "../context/AuthContext.jsx";
+import { Button, Field, Input } from "../components/ui.jsx";
 
 export function LoginPage() {
   const { token, loading, login } = useAuth();
@@ -38,41 +39,29 @@ export function LoginPage() {
           Use your studio account to load your personas and posts from SQLite.
         </p>
         <form onSubmit={onSubmit} className="mt-6 space-y-4">
-          <div>
-            <label htmlFor="login-email" className="block text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Email
-            </label>
-            <input
+          <Field label="Email">
+            <Input
               id="login-email"
               type="email"
               autoComplete="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100"
             />
-          </div>
-          <div>
-            <label htmlFor="login-password" className="block text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Password
-            </label>
-            <input
+          </Field>
+          <Field label="Password">
+            <Input
               id="login-password"
               type="password"
               autoComplete="current-password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100"
             />
-          </div>
-          <button
-            type="submit"
-            disabled={submitting || loading}
-            className="w-full rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-500 disabled:opacity-60"
-          >
+          </Field>
+          <Button type="submit" className="w-full" disabled={submitting || loading}>
             {submitting ? "Signing in…" : "Sign in"}
-          </button>
+          </Button>
         </form>
         <p className="mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
           No account?{" "}

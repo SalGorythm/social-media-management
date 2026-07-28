@@ -1,3 +1,6 @@
+import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import { toast } from "sonner";
 import {
   addMonths,
   eachDayOfInterval,
@@ -9,12 +12,10 @@ import {
   startOfMonth,
   startOfWeek,
 } from "date-fns";
-import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import { toast } from "sonner";
 import { api } from "../api.js";
 import { usePersona } from "../context/PersonaContext.jsx";
 import { EmptyState } from "../components/EmptyState.jsx";
+import { Button, PageHeader } from "../components/ui.jsx";
 import { platformIcon, platformLabel } from "../lib/platforms.js";
 
 export function CalendarPage() {
@@ -108,35 +109,23 @@ export function CalendarPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="font-display text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white">
-            Calendar
-          </h1>
-          <p className="text-slate-600 dark:text-slate-400 mt-1 text-sm">
-            Scheduled posts for the month. Drag a post to another day to reschedule.
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setCursor((d) => addMonths(d, -1))}
-            className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-sm"
-          >
-            Prev
-          </button>
-          <span className="text-sm font-medium tabular-nums min-w-[8rem] text-center">
-            {format(cursor, "MMMM yyyy")}
-          </span>
-          <button
-            type="button"
-            onClick={() => setCursor((d) => addMonths(d, 1))}
-            className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-sm"
-          >
-            Next
-          </button>
-        </div>
-      </div>
+      <PageHeader
+        title="Calendar"
+        description="Scheduled posts for the month. Drag a post to another day to reschedule."
+        actions={
+          <div className="flex items-center gap-2">
+            <Button size="sm" variant="secondary" onClick={() => setCursor((d) => addMonths(d, -1))}>
+              Prev
+            </Button>
+            <span className="text-sm font-medium tabular-nums min-w-[8rem] text-center">
+              {format(cursor, "MMMM yyyy")}
+            </span>
+            <Button size="sm" variant="secondary" onClick={() => setCursor((d) => addMonths(d, 1))}>
+              Next
+            </Button>
+          </div>
+        }
+      />
 
       {loading ? <p className="text-slate-500">Loading…</p> : null}
 

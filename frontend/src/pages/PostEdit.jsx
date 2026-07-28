@@ -4,6 +4,14 @@ import { toast } from "sonner";
 import { api } from "../api.js";
 import { usePersona } from "../context/PersonaContext.jsx";
 import { PLATFORM_LIMITS, platformLabel } from "../lib/platforms.js";
+import {
+  ActionRow,
+  Button,
+  Field,
+  Input,
+  Select,
+  Textarea,
+} from "../components/ui.jsx";
 
 const STATUSES = ["pending", "approved", "posted", "rejected"];
 
@@ -125,13 +133,9 @@ export function PostEdit() {
   return (
     <div className="max-w-3xl space-y-6">
       <div>
-        <button
-          type="button"
-          onClick={() => navigate(-1)}
-          className="text-sm text-indigo-600 dark:text-indigo-400"
-        >
+        <Button variant="link" onClick={() => navigate(-1)}>
           ← Back
-        </button>
+        </Button>
         <h1 className="font-display text-2xl font-semibold text-slate-900 dark:text-white mt-2">
           Edit post
         </h1>
@@ -149,26 +153,25 @@ export function PostEdit() {
             {caption.length} / {limit} ({platformLabel(post.platform)})
           </span>
         </div>
-        <textarea
+        <Textarea
           id="caption"
           rows={10}
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
-          className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 p-3 text-sm"
         />
       </div>
 
       <div>
         <div className="flex items-center justify-between gap-3">
           <p className="text-sm font-medium text-slate-700 dark:text-slate-200">Hashtags</p>
-          <button
-            type="button"
+          <Button
+            size="sm"
+            variant="secondary"
             onClick={copyHashtags}
             disabled={hashtags.length === 0}
-            className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-sm disabled:opacity-50"
           >
             Copy hashtags
-          </button>
+          </Button>
         </div>
         <div className="flex flex-wrap gap-2 mt-2">
           {hashtags.map((tag) => (
@@ -177,27 +180,27 @@ export function PostEdit() {
               className="inline-flex items-center gap-1 rounded-full bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-sm"
             >
               #{tag}
-              <button type="button" className="text-slate-500 hover:text-rose-600" onClick={() => removeTag(tag)}>
+              <button
+                type="button"
+                className="text-slate-500 hover:text-rose-600"
+                onClick={() => removeTag(tag)}
+              >
                 ×
               </button>
             </span>
           ))}
         </div>
         <div className="flex gap-2 mt-2">
-          <input
+          <Input
             value={tagInput}
             onChange={(e) => setTagInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
             placeholder="Add tag"
-            className="flex-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
+            className="flex-1"
           />
-          <button
-            type="button"
-            onClick={addTag}
-            className="rounded-lg bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-3 py-2 text-sm font-medium"
-          >
+          <Button variant="secondary" onClick={addTag}>
             Add
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -205,94 +208,56 @@ export function PostEdit() {
         <label className="text-sm font-medium text-slate-700 dark:text-slate-200" htmlFor="imagePrompt">
           Image prompt
         </label>
-        <textarea
+        <Textarea
           id="imagePrompt"
           rows={6}
           value={imagePrompt}
           onChange={(e) => setImagePrompt(e.target.value)}
-          className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 p-3 text-sm"
         />
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={() => copyPrompt("dalle")}
-            className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-sm"
-          >
+        <ActionRow>
+          <Button size="sm" variant="secondary" onClick={() => copyPrompt("dalle")}>
             Copy for DALL-E
-          </button>
-          <button
-            type="button"
-            onClick={() => copyPrompt("mj")}
-            className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-sm"
-          >
+          </Button>
+          <Button size="sm" variant="secondary" onClick={() => copyPrompt("mj")}>
             Copy for Midjourney
-          </button>
-        </div>
+          </Button>
+        </ActionRow>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-4">
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Status</label>
-          <select
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm capitalize"
-          >
+        <Field label="Status">
+          <Select value={status} onChange={(e) => setStatus(e.target.value)} className="capitalize">
             {STATUSES.map((s) => (
               <option key={s} value={s}>
                 {s}
               </option>
             ))}
-          </select>
-        </div>
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Scheduled date</label>
-          <input
+          </Select>
+        </Field>
+        <Field label="Scheduled date">
+          <Input
             type="date"
             value={scheduledDate ? scheduledDate.slice(0, 10) : ""}
             onChange={(e) => setScheduledDate(e.target.value)}
-            className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
           />
-        </div>
+        </Field>
       </div>
 
-      <div className="space-y-1">
-        <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Image path (local)</label>
-        <input
-          value={imagePath}
-          onChange={(e) => setImagePath(e.target.value)}
-          className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
-        />
-      </div>
+      <Field label="Image path (local)">
+        <Input value={imagePath} onChange={(e) => setImagePath(e.target.value)} />
+      </Field>
 
-      <div className="space-y-1">
-        <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Video idea</label>
-        <textarea
-          rows={3}
-          value={videoIdea}
-          onChange={(e) => setVideoIdea(e.target.value)}
-          className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 p-3 text-sm"
-        />
-      </div>
+      <Field label="Video idea">
+        <Textarea rows={3} value={videoIdea} onChange={(e) => setVideoIdea(e.target.value)} />
+      </Field>
 
-      <div className="space-y-1">
-        <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Posting tip</label>
-        <textarea
-          rows={2}
-          value={postingTip}
-          onChange={(e) => setPostingTip(e.target.value)}
-          className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 p-3 text-sm"
-        />
-      </div>
+      <Field label="Posting tip">
+        <Textarea rows={2} value={postingTip} onChange={(e) => setPostingTip(e.target.value)} />
+      </Field>
 
-      <button
-        type="button"
-        onClick={save}
-        disabled={saving}
-        className="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-500 disabled:opacity-60"
-      >
+      <Button size="lg" onClick={save} disabled={saving}>
         {saving ? "Saving…" : "Save changes"}
-      </button>
+      </Button>
     </div>
   );
 }

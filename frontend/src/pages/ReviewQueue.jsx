@@ -1,10 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import clsx from "clsx";
 import { api } from "../api.js";
 import { usePersona } from "../context/PersonaContext.jsx";
 import { EmptyState } from "../components/EmptyState.jsx";
+import {
+  ActionRow,
+  Button,
+  FilterDate,
+  FilterSelect,
+  LinkButton,
+  PageHeader,
+} from "../components/ui.jsx";
 import { platformIcon, platformLabel } from "../lib/platforms.js";
 
 const STATUSES = ["", "pending", "approved", "rejected"];
@@ -171,34 +178,20 @@ export function ReviewQueue() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-        <div>
-          <h1 className="font-display text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white">
-            Review queue
-          </h1>
-          <p className="text-slate-600 dark:text-slate-400 mt-1 text-sm">
-            Filter, expand, and approve content before you post manually.
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Link
-            to="/posted"
-            className="inline-flex items-center justify-center rounded-xl border border-slate-200 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800"
-          >
-            Posted archive
-          </Link>
-          <button
-            type="button"
-            onClick={processNewPosts}
-            disabled={processing}
-            className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 disabled:opacity-60"
-          >
-            {processing ? "Processing..." : "Process new posts"}
-          </button>
-        </div>
-      </div>
+      <PageHeader
+        title="Review queue"
+        description="Filter, expand, and approve content before you post manually."
+        actions={
+          <ActionRow>
+            <LinkButton to="/posted">Posted archive</LinkButton>
+            <Button onClick={processNewPosts} disabled={processing}>
+              {processing ? "Processing..." : "Process new posts"}
+            </Button>
+          </ActionRow>
+        }
+      />
 
-      <div className="flex flex-wrap gap-2 items-end rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4">
+      <div className="flex flex-wrap gap-3 items-end rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4">
         <FilterSelect
           label="Account"
           value={filters.account_id}
@@ -232,56 +225,32 @@ export function ReviewQueue() {
           onChange={(v) => setFilters((f) => ({ ...f, status: v }))}
           options={STATUSES.map((s) => ({ value: s, label: s || "All" }))}
         />
-        <div className="flex flex-col gap-1">
-          <span className="text-xs font-medium text-slate-500">Scheduled from</span>
-          <input
-            type="date"
-            value={filters.date_from}
-            onChange={(e) => setFilters((f) => ({ ...f, date_from: e.target.value }))}
-            className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-2 py-1.5 text-sm"
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <span className="text-xs font-medium text-slate-500">Scheduled to</span>
-          <input
-            type="date"
-            value={filters.date_to}
-            onChange={(e) => setFilters((f) => ({ ...f, date_to: e.target.value }))}
-            className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-2 py-1.5 text-sm"
-          />
-        </div>
+        <FilterDate
+          label="Scheduled from"
+          value={filters.date_from}
+          onChange={(v) => setFilters((f) => ({ ...f, date_from: v }))}
+        />
+        <FilterDate
+          label="Scheduled to"
+          value={filters.date_to}
+          onChange={(v) => setFilters((f) => ({ ...f, date_to: v }))}
+        />
       </div>
 
-      <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          onClick={() => bulkAction("approve")}
-          className="rounded-lg bg-emerald-600 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-500"
-        >
+      <ActionRow>
+        <Button size="sm" variant="success" onClick={() => bulkAction("approve")}>
           Approve selected
-        </button>
-        <button
-          type="button"
-          onClick={() => bulkAction("reject")}
-          className="rounded-lg bg-amber-600 px-3 py-2 text-sm font-medium text-white hover:bg-amber-500"
-        >
+        </Button>
+        <Button size="sm" variant="warning" onClick={() => bulkAction("reject")}>
           Reject selected
-        </button>
-        <button
-          type="button"
-          onClick={() => bulkAction("posted")}
-          className="rounded-lg bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-500"
-        >
+        </Button>
+        <Button size="sm" onClick={() => bulkAction("posted")}>
           Mark selected posted
-        </button>
-        <button
-          type="button"
-          onClick={() => bulkAction("delete")}
-          className="rounded-lg bg-rose-600 px-3 py-2 text-sm font-medium text-white hover:bg-rose-500"
-        >
+        </Button>
+        <Button size="sm" variant="danger" onClick={() => bulkAction("delete")}>
           Delete selected
-        </button>
-      </div>
+        </Button>
+      </ActionRow>
 
       {loading ? (
         <p className="text-slate-500">Loading…</p>
@@ -290,14 +259,9 @@ export function ReviewQueue() {
           title="Nothing in this queue"
           description="Adjust filters or import JSON from the content-queue folder, then use Process new posts to bring them into the app."
           action={
-            <button
-              type="button"
-              onClick={processNewPosts}
-              disabled={processing}
-              className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
-            >
+            <Button onClick={processNewPosts} disabled={processing}>
               {processing ? "Processing..." : "Process new posts"}
-            </button>
+            </Button>
           }
         />
       ) : (
@@ -330,10 +294,14 @@ export function ReviewQueue() {
                     <span
                       className={clsx(
                         "rounded-full px-2 py-0.5 text-xs font-medium capitalize",
-                        post.status === "pending" && "bg-amber-100 text-amber-900 dark:bg-amber-900/40 dark:text-amber-100",
-                        post.status === "approved" && "bg-emerald-100 text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-100",
-                        post.status === "posted" && "bg-indigo-100 text-indigo-900 dark:bg-indigo-900/40 dark:text-indigo-100",
-                        post.status === "rejected" && "bg-rose-100 text-rose-900 dark:bg-rose-900/40 dark:text-rose-100"
+                        post.status === "pending" &&
+                          "bg-amber-100 text-amber-900 dark:bg-amber-900/40 dark:text-amber-100",
+                        post.status === "approved" &&
+                          "bg-emerald-100 text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-100",
+                        post.status === "posted" &&
+                          "bg-indigo-100 text-indigo-900 dark:bg-indigo-900/40 dark:text-indigo-100",
+                        post.status === "rejected" &&
+                          "bg-rose-100 text-rose-900 dark:bg-rose-900/40 dark:text-rose-100"
                       )}
                     >
                       {post.status}
@@ -349,13 +317,14 @@ export function ReviewQueue() {
                     >
                       {post.caption}
                     </p>
-                    <button
-                      type="button"
-                      className="text-sm text-indigo-600 dark:text-indigo-400 mt-1"
+                    <Button
+                      variant="link"
+                      size="sm"
+                      className="mt-1"
                       onClick={() => setExpanded((e) => ({ ...e, [post.id]: !e[post.id] }))}
                     >
                       {expanded[post.id] ? "Show less" : "Expand caption"}
-                    </button>
+                    </Button>
                   </div>
 
                   <div className="flex flex-wrap gap-1">
@@ -377,99 +346,65 @@ export function ReviewQueue() {
                   ) : null}
 
                   <div>
-                    <button
-                      type="button"
-                      className="text-sm font-medium text-indigo-600 dark:text-indigo-400"
+                    <Button
+                      variant="link"
+                      size="sm"
                       onClick={() => setPromptOpen((p) => ({ ...p, [post.id]: !p[post.id] }))}
                     >
                       {promptOpen[post.id] ? "Hide image prompt" : "Image prompt"}
-                    </button>
+                    </Button>
                     {promptOpen[post.id] && post.image_prompt ? (
-                      <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 whitespace-pre-wrap border border-slate-100 dark:border-slate-800 rounded-lg p-3">
+                      <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 whitespace-pre-wrap border border-slate-100 dark:border-slate-800 rounded-xl p-3">
                         {post.image_prompt}
                       </p>
                     ) : null}
                   </div>
 
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    <button
-                      type="button"
-                      onClick={() => oneAction(post.id, "approve")}
-                      className="rounded-lg bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white"
-                    >
+                  <ActionRow className="pt-1">
+                    <Button size="sm" variant="success" onClick={() => oneAction(post.id, "approve")}>
                       Approve
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => oneAction(post.id, "reject")}
-                      className="rounded-lg bg-slate-200 dark:bg-slate-800 px-3 py-1.5 text-sm font-medium"
-                    >
+                    </Button>
+                    <Button size="sm" variant="secondary" onClick={() => oneAction(post.id, "reject")}>
                       Reject
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => oneAction(post.id, "posted")}
-                      className="rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white"
-                    >
+                    </Button>
+                    <Button size="sm" onClick={() => oneAction(post.id, "posted")}>
                       Mark posted
-                    </button>
-                    <Link
-                      to={`/posts/${post.id}`}
-                      className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-sm font-medium"
-                    >
+                    </Button>
+                    <LinkButton to={`/posts/${post.id}`} size="sm">
                       Edit
-                    </Link>
-                    <button
-                      type="button"
+                    </LinkButton>
+                    <Button
+                      size="sm"
+                      variant="secondary"
                       onClick={() => copyText(post.caption, "Caption copied")}
-                      className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-sm"
                     >
                       Copy caption
-                    </button>
+                    </Button>
                     {(post.hashtags || []).length > 0 ? (
-                      <button
-                        type="button"
+                      <Button
+                        size="sm"
+                        variant="secondary"
                         onClick={() => copyText(formatHashtags(post.hashtags), "Hashtags copied")}
-                        className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-sm"
                       >
                         Copy hashtags
-                      </button>
+                      </Button>
                     ) : null}
                     {post.image_prompt ? (
-                      <button
-                        type="button"
+                      <Button
+                        size="sm"
+                        variant="secondary"
                         onClick={() => copyText(post.image_prompt, "Image prompt copied")}
-                        className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-sm"
                       >
                         Copy image prompt
-                      </button>
+                      </Button>
                     ) : null}
-                  </div>
+                  </ActionRow>
                 </div>
               </div>
             </li>
           ))}
         </ul>
       )}
-    </div>
-  );
-}
-
-function FilterSelect({ label, value, onChange, options }) {
-  return (
-    <div className="flex flex-col gap-1 min-w-[8rem]">
-      <span className="text-xs font-medium text-slate-500">{label}</span>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-2 py-1.5 text-sm"
-      >
-        {options.map((o) => (
-          <option key={o.value || "all"} value={o.value}>
-            {o.label}
-          </option>
-        ))}
-      </select>
     </div>
   );
 }
