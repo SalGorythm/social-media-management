@@ -1,0 +1,42 @@
+{
+  "account": "@easysalahapp",
+  "generated_at": "2026-05-10T10:00:00Z",
+  "posts": [
+    {
+      "platform": "instagram",
+      "post_type": "post",
+      "caption": "Start your day with clarity and peace. Easy Salah keeps prayer times and Qibla at your fingertips—built for busy Muslims who never want to miss a salah.",
+      "hashtags": [
+        "islamicapp",
+        "salah",
+        "muslimlife",
+        "prayertime",
+        "qibla",
+        "ramadan",
+        "deen",
+        "muslim",
+        "ios",
+        "spirituality",
+        "ummah",
+        "halal",
+        "faith",
+        "dhikr",
+        "mosque"
+      ],
+      "image_prompt": "A serene early morning scene: a modern Muslim professional opening the Easy Salah app on an iPhone, soft golden sunrise light through a minimalist apartment window, warm beige and sage green palette, shallow depth of field, clean UI glow on the screen showing prayer times, cinematic photography style, hopeful and calm mood, subtle lens flare, ultra detailed, no text on the image.",
+      "video_idea": null,
+      "posting_tip": "Best posted on Friday between 6–8 PM for Muslim audience engagement.",
+      "scheduled_date": "2026-05-17"
+    },
+    {
+      "platform": "x",
+      "post_type": "post",
+      "caption": "Never miss a prayer. Easy Salah: accurate times, Qibla, and a calm UI for your daily salah.",
+      "hashtags": ["Muslim", "PrayerApp", "iOS", "Salah", "IslamicTech", "EasySalah"],
+      "image_prompt": "Minimal product hero: iPhone mockup centered on a soft gradient (deep teal to midnight blue), abstract geometric mosque silhouette in negative space, premium tech aesthetic, soft studio lighting, high contrast, no readable text on device screen—UI as abstract blocks only.",
+      "video_idea": null,
+      "posting_tip": "Post after Fajr or Maghrib time in target timezone.",
+      "scheduled_date": "2026-05-18"
+    }
+  ]
+}

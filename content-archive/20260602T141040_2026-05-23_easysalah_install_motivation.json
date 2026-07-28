@@ -1,0 +1,132 @@
+{
+  "account": "@easysalahapp",
+  "generated_at": "2026-05-23T18:00:00Z",
+  "posts": [
+    {
+      "platform": "instagram",
+      "post_type": "post",
+      "caption": "You don’t need another noisy app—just one that respects your salah and your privacy. EasySalah runs entirely on your phone: accurate prayer times, Qibla, Zakat tools, Hijri calendar, tasbih, and reminders—no accounts, no ads, no analytics. Install it once, keep your deen organized without handing your data to a server.",
+      "hashtags": [
+        "EasySalah",
+        "muslim",
+        "salah",
+        "prayertime",
+        "qibla",
+        "privacy",
+        "islamicapp",
+        "halaltech",
+        "deen",
+        "ios",
+        "android",
+        "muslimlife",
+        "spirituality",
+        "ummah"
+      ],
+      "image_prompt": "Warm minimal product shot: two phones (iOS + Android) side by side showing abstract blurred prayer-time UI (no readable text), soft cream and deep teal background, subtle geometric Islamic pattern as texture, trust and calm mood, premium editorial lighting.",
+      "video_idea": null,
+      "posting_tip": "Pin a comment: “What feature do you use first—times, Qibla, or Zakat?” to drive saves and replies.",
+      "scheduled_date": "2026-05-24"
+    },
+    {
+      "platform": "threads",
+      "post_type": "post",
+      "caption": "Honest question: how many “Islamic” apps are quietly phoning home?\n\nEasySalah is built different—logic stays on-device, no backend, no login wall. You get merged fard + nafl rows, next-prayer countdown, Qibla with declination correction, Zakat (simple + detailed + nisab check + motivation), Wealth Tracker with hawl countdowns, full Hijri calendar with important dates, widgets on Home + Lock Screen, and 7 languages.\n\nIf you’ve been meaning to tighten your salah routine, this is the kind of tool you install and *keep*.",
+      "hashtags": [
+        "threads",
+        "muslim",
+        "privacy",
+        "salah",
+        "prayertime",
+        "islamicapp",
+        "buildinpublic",
+        "deen",
+        "zakat",
+        "hijricalendar"
+      ],
+      "image_prompt": "Thread-style carousel slide 1: bold headline block “On-device only” over soft gradient; slide 2: icon row (clock, compass, coin, moon) no text labels; slide 3: phone edge with widget glow abstract; cohesive dark-mode palette.",
+      "video_idea": null,
+      "posting_tip": "Post as a thread: first post hook, second bullet features, third CTA to download.",
+      "scheduled_date": "2026-05-25"
+    },
+    {
+      "platform": "x",
+      "post_type": "post",
+      "caption": "Install EasySalah if you want prayer times + Qibla + Zakat + Hijri calendar + tasbih—without accounts, ads, or analytics. v2.3.1, Expo/React Native, reminders on-device, widgets on iOS & Android. Your salah stack shouldn’t need a sign-in.",
+      "hashtags": [
+        "Muslim",
+        "PrayerApp",
+        "Privacy",
+        "OpenSourceAdjacent",
+        "Salah",
+        "Qibla",
+        "Zakat",
+        "Hijri",
+        "IndieApp",
+        "EasySalah"
+      ],
+      "image_prompt": "Single clean X card graphic: split layout “Server: none” vs “Features: plenty”, monospace accent line, midnight blue background, mint accent, no tiny unreadable text.",
+      "video_idea": null,
+      "posting_tip": "Quote with your own one-line: what made you delete your last prayer app?",
+      "scheduled_date": "2026-05-26"
+    },
+    {
+      "platform": "instagram",
+      "post_type": "reel",
+      "caption": "3 reasons people switch to EasySalah: (1) Next prayer is always obvious—countdown + merged rows. (2) Qibla you can trust—magnetometer + declination. (3) Zakat isn’t an afterthought—simple calculator, detailed mode, live nisab check, motivation tab, and wealth tracker with hawl countdowns. Link in bio—your phone, your data.",
+      "hashtags": [
+        "reels",
+        "muslimreels",
+        "salah",
+        "qibla",
+        "zakat",
+        "islam",
+        "prayertime",
+        "muslimtiktok",
+        "spiritualroutine",
+        "islamicapp",
+        "privacyfirst",
+        "easysalah"
+      ],
+      "image_prompt": null,
+      "video_idea": "0–4s: hook on-screen text “Still guessing your next salah?” over quick cuts of busy day. 4–10s: screen recording style (blur sensitive UI text) showing countdown + prayer list scroll. 10–14s: compass rose animation abstract. 14–18s: simple calculator → nisab check transition blurred. 18–22s: Hijri month grid swipe blurred. 22–26s: CTA text “EasySalah · on your device only”. Vertical 9:16, upbeat no-lyrics nasheed-style bed optional.",
+      "posting_tip": "Caption first line before the fold: “No login. No ads.” for scroll stop.",
+      "scheduled_date": "2026-05-27"
+    },
+    {
+      "platform": "instagram",
+      "post_type": "story",
+      "caption": "Poll: What would make you install a prayer app today? A) Accurate times B) Privacy C) Zakat help D) All of the above → EasySalah checks the box. Tap link.",
+      "hashtags": [
+        "story",
+        "salah",
+        "easysalah",
+        "muslim",
+        "poll",
+        "prayertime"
+      ],
+      "image_prompt": "Story vertical gradient teal to black, large poll-style A/B/C/D blocks as abstract shapes, small app icon silhouette bottom center, high contrast for thumb-stop.",
+      "video_idea": null,
+      "posting_tip": "Use native poll sticker mapped to A–D; link sticker to store listing.",
+      "scheduled_date": "2026-05-28"
+    },
+    {
+      "platform": "facebook",
+      "post_type": "post",
+      "caption": "Between work, family, and notifications, salah can feel like one more thing to track. EasySalah helps you stay ahead: location-based times with method + madhab options, gentle banners at prohibited prayer windows, Islamic calendar with curated dates and optional reminders, tasbih with history, and Home + Lock Screen widgets so glances count—even when life is loud. No accounts, no ads—just a companion that stays on your phone. If you’ve been putting off a better routine, start with the app that doesn’t ask for your email.",
+      "hashtags": [
+        "EasySalah",
+        "Islam",
+        "PrayerTimes",
+        "MuslimCommunity",
+        "Family",
+        "Faith",
+        "Productivity",
+        "Mindfulness"
+      ],
+      "image_prompt": "Lifestyle photo: family kitchen table at golden hour, parent glances at phone on table showing abstract widget/time UI (no legible text), warm hopeful mood, inclusive casting, shallow DOF.",
+      "video_idea": null,
+      "posting_tip": "Post Friday or Sunday afternoon for family-heavy engagement; first comment with feature list.",
+      "scheduled_date": "2026-05-29"
+    }
+  ]
+}

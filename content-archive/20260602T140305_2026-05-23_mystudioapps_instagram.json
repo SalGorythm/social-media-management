@@ -1,0 +1,45 @@
+{
+  "account": "@mystudioapps",
+  "generated_at": "2026-05-23T14:35:00Z",
+  "posts": [
+    {
+      "platform": "instagram",
+      "post_type": "post",
+      "caption": "Shipping beats perfecting. This week: tighter onboarding, clearer empty states, and one less tap to the thing users actually came for. What are you polishing in your app this week?",
+      "hashtags": [
+        "indiedev",
+        "iosdev",
+        "buildinpublic",
+        "ux",
+        "appdesign",
+        "swiftui",
+        "mobileapps",
+        "startup",
+        "product",
+        "software"
+      ],
+      "image_prompt": "Split-frame product story: left side messy whiteboard sketches of wireframes, right side polished phone mockup with abstract colorful UI blocks (no readable labels), modern studio lighting, mint and charcoal color story, crisp shadows, tech-brand photography.",
+      "video_idea": null,
+      "posting_tip": "Add a poll sticker: “Ship small this week?” vs “Go big?” to drive comments.",
+      "scheduled_date": "2026-05-28"
+    },
+    {
+      "platform": "x",
+      "post_type": "post",
+      "caption": "Reminder: your changelog is marketing. Ship notes users can skim in 10 seconds—what changed, why it matters, how to try it.",
+      "hashtags": [
+        "DevTwitter",
+        "IndieHackers",
+        "Product",
+        "SaaS",
+        "BuildInPublic",
+        "UXWriting",
+        "ReleaseNotes"
+      ],
+      "image_prompt": "Flat vector illustration of a rocket made of stacked release-note cards, minimal geometric style, dark mode background, accent electric violet, no text in image.",
+      "video_idea": null,
+      "posting_tip": "Quote-tweet a popular dev account’s shipping thread with your one-line takeaway.",
+      "scheduled_date": "2026-05-29"
+    }
+  ]
+}
