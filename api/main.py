@@ -14,7 +14,7 @@ from api.config import get_settings
 from api.db import get_db, set_import_target_persona_id
 from api.deps import CurrentUser, PersonaId
 from api.parser import parse_queue_dir, start_queue_watcher, stop_queue_watcher
-from api.routes import accounts, auth, personas, posts, stats
+from api.routes import accounts, auth, llm, personas, posts, stats
 
 
 def _error_payload(detail: Any) -> dict:
@@ -72,6 +72,7 @@ app.include_router(personas.router)
 app.include_router(accounts.router)
 app.include_router(posts.router)
 app.include_router(stats.router)
+app.include_router(llm.router)
 
 
 @app.get("/api/health")

@@ -185,6 +185,15 @@ def migrate(db: sqlite3.Connection) -> None:
         CREATE INDEX IF NOT EXISTS idx_posts_scheduled ON posts(scheduled_date);
         CREATE INDEX IF NOT EXISTS idx_events_post ON post_status_events(post_id);
         CREATE INDEX IF NOT EXISTS idx_events_created ON post_status_events(created_at);
+
+        CREATE TABLE IF NOT EXISTS user_llm_keys (
+          user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+          provider TEXT NOT NULL,
+          api_key_enc TEXT NOT NULL,
+          model TEXT,
+          updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+          PRIMARY KEY (user_id, provider)
+        );
         """
     )
 
