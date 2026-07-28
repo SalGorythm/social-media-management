@@ -1,33 +1,118 @@
 {
-  "account": "@demoaccount",
-  "generated_at": "2026-05-10T10:00:00Z",
+  "account": "@demo_product",
+  "generated_at": "2026-07-28T12:00:00Z",
   "posts": [
     {
       "platform": "instagram",
       "post_type": "post",
-      "caption": "Ship the habit, not the hype. One clear tip today: show the next step your product helps people take—then invite them to try it.",
+      "caption": "Ship the habit, not the hype.\n\nOne clear tip today: show the next step your product helps people take—then invite them to try it.\n\nWhat’s the smallest win you can celebrate this week?",
       "hashtags": [
         "buildinpublic",
         "product",
         "indiedev",
         "contentmarketing",
         "socialmedia",
-        "startup"
+        "startup",
+        "habits",
+        "productivity",
+        "saas",
+        "makers",
+        "uxwriting",
+        "growth",
+        "community",
+        "solopreneur",
+        "marketing"
       ],
-      "image_prompt": "Clean product lifestyle photo: smartphone on a desk with a soft abstract UI glow (no readable text), warm natural light, minimal workspace, hopeful and calm mood, shallow depth of field.",
+      "image_prompt": "Clean product lifestyle photo: smartphone on a sunlit desk with a soft abstract UI glow (no readable text on screen), warm natural light, minimal workspace, ceramic mug, notebook edge, hopeful and calm mood, shallow depth of field, soft beige and soft teal palette, editorial product photography.",
       "video_idea": null,
-      "posting_tip": "Post mid-week when your audience is most active; pin a question in the first comment.",
-      "scheduled_date": "2026-05-17"
+      "posting_tip": "Post mid-week mid-morning for your audience; pin a question in the first comment to boost replies.",
+      "scheduled_date": "2026-07-29"
     },
     {
       "platform": "x",
       "post_type": "post",
-      "caption": "Reminder: your changelog is marketing. One line on what changed, why it matters, and how to try it.",
-      "hashtags": ["IndieHackers", "Product", "BuildInPublic", "UXWriting"],
-      "image_prompt": "Minimal flat illustration of stacked release-note cards forming a small rocket, dark background, single accent color, no text in image.",
+      "caption": "Reminder: your changelog is marketing.\n\nOne line on what changed.\nOne line on why it matters.\nOne line on how to try it.\n\nThat’s a post.",
+      "hashtags": [
+        "IndieHackers",
+        "Product",
+        "BuildInPublic",
+        "UXWriting",
+        "SaaS",
+        "Startup"
+      ],
+      "image_prompt": "Minimal flat illustration of stacked release-note cards forming a small rocket silhouette, dark charcoal background, single soft teal accent, no text in the image, crisp vector look.",
       "video_idea": null,
-      "posting_tip": "Quote a relevant thread with your one-line takeaway.",
-      "scheduled_date": "2026-05-18"
+      "posting_tip": "Quote a relevant thread and lead with your one-line takeaway.",
+      "scheduled_date": "2026-07-30"
+    },
+    {
+      "platform": "instagram",
+      "post_type": "reel",
+      "caption": "3-second habit reset (save this):\n\n1. Name the friction\n2. Shrink the next step\n3. Celebrate finishing it\n\nYour product should make step 2 obvious.",
+      "hashtags": [
+        "reels",
+        "habits",
+        "productivitytips",
+        "buildinpublic",
+        "productdesign",
+        "indiehacker",
+        "shortform",
+        "motivation",
+        "saasmarketing",
+        "creator",
+        "startuplife",
+        "ux",
+        "tips",
+        "community",
+        "demo"
+      ],
+      "image_prompt": "Vertical 9:16 frame moodboard still: three simple icon cards floating over a soft gradient background (cream to muted teal), friendly geometric icons for friction / tiny step / checkmark, no readable text, bright and energetic, social-first lighting.",
+      "video_idea": "0–2s: bold on-screen hook “Stuck starting?” 2–8s: three quick cuts matching the numbered tips with large kinetic text. 8–12s: product UI mock (blurred) with CTA “Try the tiny step.” Upbeat lo-fi bed, captions burned in.",
+      "posting_tip": "Hook in the first second; keep text large for mute viewing; end with a save-worthy tip card.",
+      "scheduled_date": "2026-07-31"
+    },
+    {
+      "platform": "threads",
+      "post_type": "post",
+      "caption": "Unpopular opinion: consistency beats clever campaigns.\n\nIf you can publish one honest product story a week, you’re already ahead of most “content strategies.”",
+      "hashtags": [
+        "buildinpublic",
+        "marketing",
+        "creators",
+        "startup",
+        "threads"
+      ],
+      "image_prompt": "Quiet editorial still life: weekly planner open on a table beside a phone face-down, soft morning light, muted greens and paper textures, calm and intentional mood, no logos or readable branding.",
+      "video_idea": null,
+      "posting_tip": "Reply to your own post with a concrete example from last week’s ship.",
+      "scheduled_date": "2026-08-01"
+    },
+    {
+      "platform": "instagram",
+      "post_type": "story",
+      "caption": "Quick poll for builders\n\nWhat’s harder right now — writing the post, or designing the visual?\n\nCTA: Vote below → then tell us why in DMs",
+      "hashtags": ["poll", "builders", "content", "community"],
+      "image_prompt": "Instagram story frame 9:16: soft peach-to-cream gradient, centered friendly question mark illustration, plenty of empty space in the lower third for a poll sticker, no small text, high contrast for mobile.",
+      "video_idea": "Static story with poll sticker: options “Writing” vs “Visuals”. Optional 3s screen record of tapping the poll for a second frame.",
+      "posting_tip": "Objective: engagement | Interactive: poll | Pair with yesterday’s feed post for continuity.",
+      "scheduled_date": "2026-08-02"
+    },
+    {
+      "platform": "facebook",
+      "post_type": "post",
+      "caption": "We built Demo Product for busy people who don’t need another productivity guilt trip.\n\nIf you’ve ever abandoned a streak because life got loud — this one’s for you.\n\nComment “RESET” if you want the 5-minute starter checklist.",
+      "hashtags": [
+        "productivity",
+        "habits",
+        "community",
+        "smallbusiness",
+        "wellbeing",
+        "facebookmarketing"
+      ],
+      "image_prompt": "Warm documentary-style photo of a person closing a laptop at dusk, soft window light, cozy room, hopeful expression, lifestyle brand feel, no logos, shallow depth of field.",
+      "video_idea": null,
+      "posting_tip": "Ask a soft CTA in the comments; reply to every early comment within the first hour.",
+      "scheduled_date": "2026-08-03"
     }
   ]
 }

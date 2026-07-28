@@ -17,6 +17,7 @@ data/*
 
 content-queue/*
 !content-queue/.gitkeep
+!content-queue/sample_*.json
 
 content-archive/*
 !content-archive/.gitkeep

@@ -1,0 +1,118 @@
+Social Content Studio — Proprietary Community License
+Copyright (c) 2026 SalGorythm (Salman Akhtar). All rights reserved.
+
+Owner / author: SalGorythm
+Contact for commercial or special permission: via GitHub (@SalGorythm)
+
+================================================================================
+SUMMARY (plain language — the numbered terms below control if anything conflicts)
+================================================================================
+
+• Made with love for the community.
+• Personal learning, experimentation, and non-commercial community use are welcome.
+• Commercial use is NOT allowed unless you have prior written authorization from the owner.
+• No warranty. You use this software at your own risk.
+• Platform brands (Instagram, X, etc.) belong to their owners; this project is unaffiliated.
+
+================================================================================
+1. DEFINITIONS
+================================================================================
+
+“Software” means this repository and all included source code, documentation,
+examples, and related materials, excluding third-party dependencies (which keep
+their own licenses).
+
+“Owner” means SalGorythm (Salman Akhtar), the copyright holder.
+
+“Commercial use” means any use primarily intended for or directed toward
+commercial advantage or monetary compensation, including (without limitation):
+selling the Software or access to it; bundling it in a paid product or service;
+using it to operate a business SaaS, agency, or client-delivery pipeline as a
+paid offering; or redistributing it as part of a commercial package — whether
+or not you charge for this Software itself.
+
+================================================================================
+2. GRANT — NON-COMMERCIAL / COMMUNITY USE
+================================================================================
+
+Subject to these terms, the Owner grants you a personal, non-exclusive,
+non-transferable, revocable license to use, copy, modify, and run the Software
+for:
+
+  (a) personal projects;
+  (b) education and learning;
+  (c) non-commercial community or open collaboration that does not constitute
+      Commercial use.
+
+You may fork and submit contributions (e.g. pull requests) under the same terms.
+Contributions do not transfer ownership of the Software to you; the Owner
+retains copyright in the Software as a whole. By submitting a contribution, you
+grant the Owner a perpetual license to include it in the Software under these
+terms.
+
+================================================================================
+3. COMMERCIAL USE — PROHIBITED WITHOUT AUTHORIZATION
+================================================================================
+
+Commercial use is strictly prohibited unless you obtain prior written
+authorization from the Owner.
+
+To request permission, contact the Owner via GitHub (@SalGorythm) or another
+channel the Owner publishes. Authorization, if granted, may include fees,
+attribution requirements, or other conditions at the Owner’s sole discretion.
+
+================================================================================
+4. REDISTRIBUTION
+================================================================================
+
+You may share the Software for non-commercial purposes only if you:
+
+  (a) keep this LICENSE file and copyright notices intact;
+  (b) clearly state that the Software is provided under this proprietary
+      community license and that commercial use requires Owner authorization;
+  (c) do not misrepresent the origin or claim ownership of the Software.
+
+================================================================================
+5. TRADEMARKS AND PLATFORM DISCLAIMER
+================================================================================
+
+“Social Content Studio”, the Owner’s name and handles, and related branding are
+not licensed for use in a way that suggests endorsement without permission.
+
+This Software is not affiliated with, endorsed by, or sponsored by Meta,
+Instagram, X (Twitter), Threads, Facebook, Reddit, Google, OpenAI, xAI, or any
+other third-party platform or AI provider. Those names are trademarks of their
+respective owners. You are solely responsible for complying with each platform’s
+terms when publishing content.
+
+================================================================================
+6. YOUR CONTENT AND DATA
+================================================================================
+
+Content you generate, import, or store (including captions, API keys, and local
+database files) remains your responsibility. The Software may store data locally
+(e.g. SQLite). Do not commit secrets or private content to public repositories.
+
+================================================================================
+7. NO WARRANTY
+================================================================================
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL THE OWNER BE LIABLE FOR ANY
+CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM USE OF THE SOFTWARE.
+
+================================================================================
+8. TERMINATION
+================================================================================
+
+This license terminates automatically if you breach it (including unauthorized
+commercial use). Upon termination you must stop using and destroy copies of the
+Software obtained under this license, except as required by law.
+
+================================================================================
+9. ENTIRE AGREEMENT
+================================================================================
+
+These terms are the complete license for the Software unless the Owner provides
+a separate written agreement (e.g. commercial authorization).

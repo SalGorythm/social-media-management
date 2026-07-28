@@ -4,6 +4,7 @@ import { usePersona } from "../context/PersonaContext.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { Button, Select } from "./ui.jsx";
+import { SignatureCredit } from "./SignatureCredit.jsx";
 
 const nav = [
   { to: "/", label: "Dashboard" },
@@ -14,6 +15,7 @@ const nav = [
   { to: "/personas", label: "Personas" },
   { to: "/settings/ai", label: "AI settings" },
   { to: "/guide", label: "Guide" },
+  { to: "/about", label: "About" },
 ];
 
 export function Layout() {
@@ -116,11 +118,19 @@ export function Layout() {
               Toggle
             </Button>
           </div>
+          <div className="hidden md:block pt-2 border-t border-slate-200 dark:border-slate-800">
+            <SignatureCredit />
+          </div>
         </div>
       </aside>
-      <main className="flex-1 p-4 md:p-8 max-w-6xl w-full mx-auto">
-        <Outlet />
-      </main>
+      <div className="flex-1 flex flex-col min-w-0">
+        <main className="flex-1 p-4 md:p-8 max-w-6xl w-full mx-auto">
+          <Outlet />
+        </main>
+        <footer className="md:hidden border-t border-slate-200 dark:border-slate-800 px-4 py-3">
+          <SignatureCredit />
+        </footer>
+      </div>
     </div>
   );
 }

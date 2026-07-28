@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import shutil
 import threading
 import time
 from datetime import datetime, timezone
@@ -280,6 +281,11 @@ def unique_platforms(posts: list[dict]) -> list[str]:
     return seen
 
 
+def is_tracked_sample(basename: str) -> bool:
+    """Committed demo files (sample_*.json) stay in content-queue after import."""
+    return basename.startswith("sample_") and basename.endswith(".json")
+
+
 def find_or_create_account(db, persona_id: int, account_name: str, posts: list[dict]) -> int:
     name = account_name.strip()
     existing = db.execute(
@@ -328,10 +334,14 @@ def parse_file(abs_path: str | Path, persona_id_override: Optional[int] = None) 
 
     data = validated["data"]
     dest = Path(paths["content_archive"]) / archive_filename(basename)
+    keep_sample = is_tracked_sample(basename)
 
     try:
         if validated["kind"] == "manifest":
-            Path(abs_path).rename(dest)
+            if keep_sample:
+                shutil.copy2(abs_path, dest)
+            else:
+                Path(abs_path).rename(dest)
             asset_count = validated.get("assetCount") or 0
             print(
                 f"[parser] Archived manifest {basename} → {dest.name} ({asset_count} assets)"
@@ -345,6 +355,23 @@ def parse_file(abs_path: str | Path, persona_id_override: Optional[int] = None) 
                 "kind": "manifest",
                 "assets": asset_count,
             }
+
+        if keep_sample:
+            already = db.execute(
+                """SELECT COUNT(*) AS c FROM posts p
+                   JOIN accounts a ON a.id = p.account_id
+                   WHERE a.persona_id = ? AND p.source_file = ?""",
+                (persona_id, basename),
+            ).fetchone()
+            if already and int(already["c"] or 0) > 0:
+                print(f"[parser] Skipping {basename}: already imported for this persona")
+                return {
+                    "ok": True,
+                    "file": basename,
+                    "count": 0,
+                    "skipped": "already_imported",
+                    "kind": validated["kind"],
+                }
 
         account_id = find_or_create_account(db, persona_id, data["account"], data["posts"])
         for p in data["posts"]:
@@ -367,7 +394,10 @@ def parse_file(abs_path: str | Path, persona_id_override: Optional[int] = None) 
                     basename,
                 ),
             )
-        Path(abs_path).rename(dest)
+        if keep_sample:
+            shutil.copy2(abs_path, dest)
+        else:
+            Path(abs_path).rename(dest)
         db.commit()
         print(f"[parser] Imported {basename} → {dest.name} ({len(data['posts'])} posts)")
         return {

@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { setStoredPersonaId } from "../api.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import { Button, Field, Input } from "../components/ui.jsx";
+import { SignatureCredit } from "../components/SignatureCredit.jsx";
 
 export function SignupPage() {
   const { token, loading, signup } = useAuth();
@@ -36,7 +37,7 @@ export function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-950 p-4">
       <div className="w-full max-w-md rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm">
         <h1 className="font-display text-2xl font-semibold text-slate-900 dark:text-white">
           Create account
@@ -77,7 +78,14 @@ export function SignupPage() {
             Sign in
           </Link>
         </p>
+        <p className="mt-3 text-center text-xs text-slate-500">
+          Personal and non-commercial community use only, unless the owner authorizes commercial use.{" "}
+          <Link to="/about" className="underline hover:text-indigo-600 dark:hover:text-indigo-400">
+            Read the license
+          </Link>
+        </p>
       </div>
+      <SignatureCredit className="mt-6 text-center max-w-md" />
     </div>
   );
 }

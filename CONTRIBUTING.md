@@ -39,6 +39,14 @@ Use [`examples/sample-content-queue.json`](examples/sample-content-queue.json) f
 
 If you previously pushed personal files to a remote, scrubbing the working tree is not enough — rewrite history (e.g. `git filter-repo`) before making the repo public, or start from a clean orphan commit.
 
+## License & commercial use
+
+This project is **not** open-source MIT/Apache. See [`LICENSE`](LICENSE).
+
+- Contributions are welcome for non-commercial community improvement.
+- By opening a PR you agree your contribution may be included under the same proprietary community license.
+- **Do not** use this software commercially (SaaS, paid agency tooling, resale, etc.) without written authorization from the owner ([@SalGorythm](https://github.com/SalGorythm)).
+
 ## Development tips
 
 ```bash

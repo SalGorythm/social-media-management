@@ -94,7 +94,7 @@ See [`.env.example`](.env.example). `run.py` sets `VITE_BACKEND_URL` from `BACKE
 
 ## Local-only paths (do not commit)
 
-These are **gitignored** except empty `.gitkeep` placeholders:
+These are **gitignored** except empty `.gitkeep` placeholders (and the tracked sample below):
 
 | Path | Purpose |
 |------|---------|
@@ -104,7 +104,7 @@ These are **gitignored** except empty `.gitkeep` placeholders:
 | `products_contexts/` | Your private product briefs (optional) |
 | `.env` | Secrets |
 
-Generic demo JSON: [`examples/sample-content-queue.json`](examples/sample-content-queue.json) — copy into `content-queue/` then use **Scan queue folder**.
+**Sample posts to try:** [`content-queue/sample_demo_product_batch.json`](content-queue/sample_demo_product_batch.json) (Instagram post / reel / story, X, Threads, Facebook for `@demo_product`). Same copy: [`examples/sample-content-queue.json`](examples/sample-content-queue.json). In the app, use **Scan queue folder** or **Process new posts**.
 
 ## Folder layout
 
@@ -183,4 +183,13 @@ Change ports in `.env` and restart.
 
 ## License
 
-Private / personal project unless you add an open-source license — adjust as needed before going public.
+**Proprietary community license** — see [`LICENSE`](LICENSE).
+
+- Made with love for the community by **SalGorythm** (Salman Akhtar).
+- **Personal / educational / non-commercial community use** is allowed.
+- **Commercial use is not allowed** unless you have **prior written authorization** from the owner ([@SalGorythm](https://github.com/SalGorythm)).
+- No warranty. Not affiliated with Instagram, Meta, X, or other platforms.
+- In-app summary: open **About** in the UI (`/about`).
+
+Third-party dependencies keep their own licenses (see `node_modules` / PyPI packages).
+
