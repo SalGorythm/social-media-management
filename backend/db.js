@@ -269,24 +269,24 @@ export function seedAccountsForPersona(db, personaId) {
 
   insert.run({
     persona_id: personaId,
-    name: "@easysalahapp",
-    product: "Easy Salah Islamic prayer iOS app",
+    name: "@demo_product",
+    product: "Sample product account for demos",
     type: "product",
     platforms: JSON.stringify(["instagram", "threads", "x"]),
-    tone: "inspiring & motivational",
+    tone: "friendly & clear",
     frequency: "daily",
-    notes: "Muslim audience; peak engagement around prayer times and Jumuah.",
+    notes: "Replace with your real product handle and audience notes.",
   });
 
   insert.run({
     persona_id: personaId,
-    name: "@mystudioapps",
-    product: "General apps brand account",
+    name: "@demo_brand",
+    product: "Sample brand account for demos",
     type: "brand",
     platforms: JSON.stringify(["instagram", "x"]),
     tone: "tech-forward & clean",
     frequency: "twice_a_week",
-    notes: "Cross-promote app launches and dev updates.",
+    notes: "Replace with your brand voice and posting cadence.",
   });
 }
 

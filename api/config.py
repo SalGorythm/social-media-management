@@ -26,6 +26,10 @@ def get_settings() -> dict:
     if not os.getenv("JWT_SECRET"):
         print("[auth] JWT_SECRET is not set; using insecure dev default")
 
+    static_dir = os.getenv("STATIC_DIR", str(REPO_ROOT / "frontend" / "dist"))
+    if not Path(static_dir).is_absolute():
+        static_dir = str(REPO_ROOT / static_dir)
+
     return {
         "jwt_secret": secret,
         "jwt_expires_days": 14,
@@ -39,4 +43,5 @@ def get_settings() -> dict:
         "content_queue": REPO_ROOT / "content-queue",
         "content_archive": REPO_ROOT / "content-archive",
         "data_dir": REPO_ROOT / "data",
+        "static_dir": Path(static_dir),
     }

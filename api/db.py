@@ -306,13 +306,13 @@ def seed_accounts_for_persona(db: sqlite3.Connection, persona_id: int) -> None:
            VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
         (
             persona_id,
-            "@easysalahapp",
-            "Easy Salah Islamic prayer iOS app",
+            "@demo_product",
+            "Sample product account for demos",
             "product",
             '["instagram", "threads", "x"]',
-            "inspiring & motivational",
+            "friendly & clear",
             "daily",
-            "Muslim audience; peak engagement around prayer times and Jumuah.",
+            "Replace with your real product handle and audience notes.",
         ),
     )
     db.execute(
@@ -320,13 +320,13 @@ def seed_accounts_for_persona(db: sqlite3.Connection, persona_id: int) -> None:
            VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
         (
             persona_id,
-            "@mystudioapps",
-            "General apps brand account",
+            "@demo_brand",
+            "Sample brand account for demos",
             "brand",
             '["instagram", "x"]',
             "tech-forward & clean",
             "twice_a_week",
-            "Cross-promote app launches and dev updates.",
+            "Replace with your brand voice and posting cadence.",
         ),
     )
 

@@ -146,7 +146,7 @@ export function PersonasPage() {
           <input
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
-            placeholder="Name (e.g. Easy Salah)"
+            placeholder="Name (e.g. My App)"
             className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm"
           />
           <input

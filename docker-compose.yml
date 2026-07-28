@@ -1,0 +1,32 @@
+# Local / deploy: FastAPI serves API + built UI on one port
+services:
+  app:
+    build: .
+    image: social-content-studio:local
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    environment:
+      JWT_SECRET: ${JWT_SECRET:-change-me-to-a-long-random-string}
+      DB_PATH: /app/data/studio.db
+      STATIC_DIR: /app/frontend/dist
+      CORS_ORIGINS: ${CORS_ORIGINS:-*}
+      BACKEND_HOST: 0.0.0.0
+      BACKEND_PORT: "8000"
+    volumes:
+      - ./data:/app/data
+      - ./content-queue:/app/content-queue
+      - ./content-archive:/app/content-archive
+      - ./products_contexts:/app/products_contexts
+    restart: unless-stopped
+
+  # Optional: put nginx in front (docker compose --profile edge up)
+  edge:
+    image: nginx:1.27-alpine
+    profiles: ["edge"]
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    volumes:
+      - ./docker/nginx-edge.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+    restart: unless-stopped
